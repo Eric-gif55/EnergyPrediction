@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sell Energy - Energy Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-green-600 text-white shadow-lg">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <a href="/" class="text-2xl font-bold">
+                    <i class="fas fa-bolt mr-2"></i>EnergyPlatform
+                </a>
+                <div class="flex space-x-6">
+                    <a href="/" class="hover:text-green-200">Home</a>
+                    <a href="/energy-selection" class="hover:text-green-200">Energy Selection</a>
+                    <a href="/engineer-services" class="hover:text-green-200">Engineers</a>
+                    <a href="/marketplace" class="hover:text-green-200">Marketplace</a>
+                    <a href="/energy-selling" class="hover:text-green-200 font-semibold">Sell Energy</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">Sell Your Excess Energy</h1>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Connect with power companies and sell your renewable energy production. Get the best prices for your solar, wind, or hydro energy.
+            </p>
+        </div>
+
+        <!-- Energy Selling Options -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-green-50 border border-green-200 rounded-lg p-6 text-center">
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-solar-panel text-green-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">Solar Energy</h3>
+                <p class="text-gray-600 mb-4">Sell excess solar power generated from your panels</p>
+                <div class="text-2xl font-bold text-green-600">$0.08 - $0.15/kWh</div>
+            </div>
+
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 text-center">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-wind text-blue-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">Wind Energy</h3>
+                <p class="text-gray-600 mb-4">Sell wind power from your turbine installations</p>
+                <div class="text-2xl font-bold text-blue-600">$0.06 - $0.12/kWh</div>
+            </div>
+
+            <div class="bg-cyan-50 border border-cyan-200 rounded-lg p-6 text-center">
+                <div class="w-16 h-16 bg-cyan-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-water text-cyan-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">Hydro Energy</h3>
+                <p class="text-gray-600 mb-4">Sell hydroelectric power from small-scale systems</p>
+                <div class="text-2xl font-bold text-cyan-600">$0.05 - $0.10/kWh</div>
+            </div>
+        </div>
+
+        <!-- List Energy Offer -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-6">List Your Energy for Sale</h2>
+            <form id="energy-offer-form">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Your Name</label>
+                        <input type="text" name="seller_name" required 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                        <input type="email" name="seller_email" required 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Energy Type</label>
+                        <select name="energy_type" required 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <option value="">Select Energy Type</option>
+                            <option value="solar">Solar Energy</option>
+                            <option value="wind">Wind Energy</option>
+                            <option value="hydro">Hydro Energy</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Capacity (kWh)</label>
+                        <input type="number" name="capacity_kwh" required min="1" step="0.01"
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                               placeholder="e.g., 5000">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Price per kWh ($)</label>
+                        <input type="number" name="price_per_kwh" required min="0.01" step="0.001"
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                               placeholder="e.g., 0.12">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                        <input type="text" name="location" required 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                               placeholder="e.g., California, USA">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Availability Date</label>
+                        <input type="date" name="availability_date" required 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Contract Duration (months)</label>
+                        <input type="number" name="duration_months" required min="1"
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                               placeholder="e.g., 24" value="12">
+                    </div>
+                </div>
+                <div class="mt-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Contact Method</label>
+                    <select name="contact_method" 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        <option value="email">Email</option>
+                        <option value="phone">Phone</option>
+                        <option value="both">Both</option>
+                    </select>
+                </div>
+                <div class="mt-6">
+                    <button type="submit" 
+                            class="w-full bg-purple-600 text-white py-3 px-6 rounded-lg hover:bg-purple-700 transition duration-200 font-semibold">
+                        <i class="fas fa-bolt mr-2"></i>List Energy for Sale
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Current Offers -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-6">Current Energy Offers</h2>
+            <div class="space-y-4">
+                <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition duration-200">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <span class="inline-block bg-purple-100 text-purple-800 text-sm px-3 py-1 rounded-full mb-2">
+                                SOLAR ENERGY
+                            </span>
+                            <h3 class="text-lg font-semibold text-gray-800">Green Energy Co</h3>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-2xl font-bold text-purple-600">$0.12/kWh</div>
+                            <div class="text-sm text-gray-500">5,000 kWh available</div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                        <div>
+                            <span class="text-gray-600">Location:</span>
+                            <span class="font-semibold">Turkana</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-600">Available From:</span>
+                            <span class="font-semibold">2024-02-01</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-600">Duration:</span>
+                            <span class="font-semibold">60 months</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-600">Contact:</span>
+                            <span class="font-semibold">email</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-3 flex justify-between items-center">
+                        <span class="text-sm text-gray-500">Posted recently</span>
+                        <button class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition duration-200 text-sm font-semibold">
+                            <i class="fas fa-envelope mr-1"></i>Contact Seller
+                        </button>
+                    </div>
+                </div>
+
+                <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition duration-200">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <span class="inline-block bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full mb-2">
+                                WIND ENERGY
+                            </span>
+                            <h3 class="text-lg font-semibold text-gray-800">Power Solutions</h3>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-2xl font-bold text-purple-600">$0.09/kWh</div>
+                            <div class="text-sm text-gray-500">3,000 kWh available</div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                        <div>
+                            <span class="text-gray-600">Location:</span>
+                            <span class="font-semibold">Nairobi</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-600">Available From:</span>
+                            <span class="font-semibold">2024-01-15</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-600">Duration:</span>
+                            <span class="font-semibold">36 months</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-600">Contact:</span>
+                            <span class="font-semibold">phone</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-3 flex justify-between items-center">
+                        <span class="text-sm text-gray-500">Posted recently</span>
+                        <button class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition duration-200 text-sm font-semibold">
+                            <i class="fas fa-envelope mr-1"></i>Contact Seller
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Energy offer form submission
+        document.getElementById('energy-offer-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Energy listing feature coming soon! Your energy will be listed for sale.');
+        });
+
+        // Contact seller buttons
+        document.querySelectorAll('button').forEach(button => {
+            if (button.textContent.includes('Contact Seller')) {
+                button.addEventListener('click', function() {
+                    const sellerName = this.closest('.border').querySelector('h3').textContent;
+                    alert(`Contact feature coming soon! You would contact: ${sellerName}`);
+                });
+            }
+        });
+
+        // Set default date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.querySelector('input[type="date"]').value = today;
+    </script>
+</body>
+</html>

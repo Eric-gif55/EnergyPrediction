@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace - Energy Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-green-600 text-white shadow-lg">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <a href="/" class="text-2xl font-bold">
+                    <i class="fas fa-bolt mr-2"></i>EnergyPlatform
+                </a>
+                <div class="flex space-x-6">
+                    <a href="/" class="hover:text-green-200">Home</a>
+                    <a href="/energy-selection" class="hover:text-green-200">Energy Selection</a>
+                    <a href="/engineer-services" class="hover:text-green-200">Engineers</a>
+                    <a href="/marketplace" class="hover:text-green-200 font-semibold">Marketplace</a>
+                    <a href="/energy-selling" class="hover:text-green-200">Sell Energy</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">Energy Equipment Marketplace</h1>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Buy and sell renewable energy equipment, materials, and components from verified suppliers.
+            </p>
+        </div>
+
+        <!-- Marketplace Controls -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
+                <div class="flex space-x-4">
+                    <select id="category-filter" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
+                        <option value="">All Categories</option>
+                        <option value="solar_panels">Solar Panels</option>
+                        <option value="wind_turbines">Wind Turbines</option>
+                        <option value="hydro_turbines">Hydro Turbines</option>
+                        <option value="batteries">Batteries</option>
+                        <option value="inverters">Inverters</option>
+                    </select>
+                    <input type="text" id="search-items" placeholder="Search items..." 
+                           class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 w-full md:w-64">
+                </div>
+                <button id="btn-sell-item" class="bg-orange-600 text-white px-6 py-2 rounded-lg hover:bg-orange-700 transition duration-200 font-semibold">
+                    <i class="fas fa-plus mr-2"></i>Sell Item
+                </button>
+            </div>
+        </div>
+
+        <!-- Items Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition duration-200">
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <span class="inline-block bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded-full mb-2">
+                                Solar Panels
+                            </span>
+                            <h3 class="text-xl font-semibold text-gray-800">Premium Solar Panel 400W</h3>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-2xl font-bold text-orange-600">$250</div>
+                            <div class="text-sm text-gray-500">per unit</div>
+                        </div>
+                    </div>
+                    
+                    <p class="text-gray-600 mb-4">High-efficiency monocrystalline solar panels with 25-year warranty.</p>
+                    
+                    <div class="space-y-2 mb-4">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Seller:</span>
+                            <span class="font-semibold">SolarTech Inc</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Location:</span>
+                            <span class="font-semibold">California</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Condition:</span>
+                            <span class="font-semibold capitalize">New</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Quantity:</span>
+                            <span class="font-semibold">50 available</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-2">
+                        <button class="flex-1 bg-orange-600 text-white py-2 px-4 rounded-lg hover:bg-orange-700 transition duration-200 font-semibold">
+                            <i class="fas fa-shopping-cart mr-2"></i>Buy Now
+                        </button>
+                        <button class="bg-gray-200 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-300 transition duration-200">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition duration-200">
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full mb-2">
+                                Wind Turbines
+                            </span>
+                            <h3 class="text-xl font-semibold text-gray-800">Residential Wind Turbine 2kW</h3>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-2xl font-bold text-orange-600">$3,200</div>
+                            <div class="text-sm text-gray-500">per unit</div>
+                        </div>
+                    </div>
+                    
+                    <p class="text-gray-600 mb-4">Vertical axis wind turbine for home use, quiet operation.</p>
+                    
+                    <div class="space-y-2 mb-4">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Seller:</span>
+                            <span class="font-semibold">WindPower Co</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Location:</span>
+                            <span class="font-semibold">Texas</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Condition:</span>
+                            <span class="font-semibold capitalize">New</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Quantity:</span>
+                            <span class="font-semibold">10 available</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-2">
+                        <button class="flex-1 bg-orange-600 text-white py-2 px-4 rounded-lg hover:bg-orange-700 transition duration-200 font-semibold">
+                            <i class="fas fa-shopping-cart mr-2"></i>Buy Now
+                        </button>
+                        <button class="bg-gray-200 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-300 transition duration-200">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition duration-200">
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <span class="inline-block bg-cyan-100 text-cyan-800 text-xs px-2 py-1 rounded-full mb-2">
+                                Hydro Turbines
+                            </span>
+                            <h3 class="text-xl font-semibold text-gray-800">Micro Hydro Turbine 5kW</h3>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-2xl font-bold text-orange-600">$4,500</div>
+                            <div class="text-sm text-gray-500">per unit</div>
+                        </div>
+                    </div>
+                    
+                    <p class="text-gray-600 mb-4">Compact hydro turbine for small streams and rivers.</p>
+                    
+                    <div class="space-y-2 mb-4">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Seller:</span>
+                            <span class="font-semibold">HydroSolutions</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Location:</span>
+                            <span class="font-semibold">Washington</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Condition:</span>
+                            <span class="font-semibold capitalize">New</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Quantity:</span>
+                            <span class="font-semibold">5 available</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-2">
+                        <button class="flex-1 bg-orange-600 text-white py-2 px-4 rounded-lg hover:bg-orange-700 transition duration-200 font-semibold">
+                            <i class="fas fa-shopping-cart mr-2"></i>Buy Now
+                        </button>
+                        <button class="bg-gray-200 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-300 transition duration-200">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="bg-orange-50 border border-orange-200 rounded-lg p-8 text-center">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-4">Want to Sell Your Equipment?</h3>
+            <p class="text-gray-600 mb-6">List your renewable energy equipment and reach thousands of potential buyers.</p>
+            <button class="bg-orange-600 text-white px-8 py-3 rounded-lg hover:bg-orange-700 transition duration-200 font-semibold">
+                <i class="fas fa-plus mr-2"></i>List Your Item
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Basic filtering functionality
+        document.getElementById('category-filter').addEventListener('change', function() {
+            const category = this.value;
+            alert('Filtering by: ' + (category || 'All Categories'));
+        });
+
+        document.getElementById('search-items').addEventListener('input', function() {
+            const searchTerm = this.value;
+            if (searchTerm.length > 2) {
+                console.log('Searching for:', searchTerm);
+            }
+        });
+
+        document.getElementById('btn-sell-item').addEventListener('click', function() {
+            alert('Sell item feature coming soon!');
+        });
+
+        // Add click handlers to all Buy Now buttons
+        document.querySelectorAll('button').forEach(button => {
+            if (button.textContent.includes('Buy Now')) {
+                button.addEventListener('click', function() {
+                    const itemName = this.closest('.bg-white').querySelector('h3').textContent;
+                    alert(`You selected: ${itemName}\nContact feature coming soon!`);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

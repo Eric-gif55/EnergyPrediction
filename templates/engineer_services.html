@@ -1,0 +1,254 @@
+{% extends "base.html" %}
+
+{% block title %}Engineer Services - Energy Platform{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="text-center mb-12">
+        <h1 class="text-4xl font-bold text-gray-800 mb-4">Certified Energy Engineers</h1>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            Connect with experienced engineers for your renewable energy project construction and maintenance needs.
+        </p>
+    </div>
+
+    <!-- Search and Filter -->
+    <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Specialization</label>
+                <select id="specialization-filter" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="">All Specializations</option>
+                    <option value="Solar">Solar Energy</option>
+                    <option value="Wind">Wind Energy</option>
+                    <option value="Hydro">Hydro Power</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                <input type="text" id="location-filter" placeholder="Filter by location..." 
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Experience</label>
+                <select id="experience-filter" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="">Any Experience</option>
+                    <option value="5">5+ years</option>
+                    <option value="10">10+ years</option>
+                    <option value="15">15+ years</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Engineers Grid -->
+    <div id="engineers-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        {% for engineer in engineers %}
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition duration-200 engineer-card" 
+             data-specialization="{{ engineer.specialization }}" 
+             data-location="{{ engineer.location }}" 
+             data-experience="{{ engineer.experience_years }}">
+            <div class="p-6">
+                <div class="flex items-center mb-4">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                        <i class="fas fa-hard-hat text-blue-600 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800">{{ engineer.name }}</h3>
+                        <p class="text-blue-600 font-medium">{{ engineer.specialization }}</p>
+                    </div>
+                </div>
+                
+                <div class="space-y-2 mb-4">
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Experience:</span>
+                        <span class="font-semibold">{{ engineer.experience_years }} years</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Location:</span>
+                        <span class="font-semibold">{{ engineer.location }}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Rate:</span>
+                        <span class="font-semibold">${{ engineer.hourly_rate }}/hr</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Rating:</span>
+                        <span class="font-semibold">
+                            {{ engineer.rating }}/5.0 
+                            <i class="fas fa-star text-yellow-500 ml-1"></i>
+                        </span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Projects:</span>
+                        <span class="font-semibold">{{ engineer.projects_completed }} completed</span>
+                    </div>
+                </div>
+                
+                <p class="text-gray-600 text-sm mb-4">{{ engineer.bio }}</p>
+                
+                <div class="flex space-x-2">
+                    <button class="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-200 font-semibold contact-engineer" 
+                            data-engineer="{{ engineer.name }}" 
+                            data-email="{{ engineer.email }}">
+                        <i class="fas fa-envelope mr-2"></i>Contact
+                    </button>
+                    <button class="bg-gray-200 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-300 transition duration-200">
+                        <i class="fas fa-info-circle"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Become an Engineer CTA -->
+    <div class="bg-blue-50 border border-blue-200 rounded-lg p-8 text-center">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Are you an Energy Engineer?</h3>
+        <p class="text-gray-600 mb-6">Join our platform and connect with clients looking for your expertise.</p>
+        <button id="btn-become-engineer" class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition duration-200 font-semibold">
+            <i class="fas fa-user-plus mr-2"></i>Join as Engineer
+        </button>
+    </div>
+</div>
+
+<!-- Become Engineer Modal -->
+<div id="become-engineer-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Join as Engineer</h3>
+        <form id="engineer-form">
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                    <input type="text" name="name" required 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                    <input type="email" name="email" required 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Specialization</label>
+                    <select name="specialization" required 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">Select Specialization</option>
+                        <option value="Solar Energy">Solar Energy</option>
+                        <option value="Wind Energy">Wind Energy</option>
+                        <option value="Hydro Power">Hydro Power</option>
+                    </select>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Experience (years)</label>
+                        <input type="number" name="experience_years" min="0" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Hourly Rate ($)</label>
+                        <input type="number" name="hourly_rate" min="0" step="0.01" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                    <input type="text" name="location" 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Bio</label>
+                    <textarea name="bio" rows="3" 
+                              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                </div>
+            </div>
+            <div class="flex space-x-4 mt-6">
+                <button type="submit" class="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-200 font-semibold">
+                    Submit Application
+                </button>
+                <button type="button" id="btn-cancel-engineer" class="bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 transition duration-200">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Filter engineers
+    document.getElementById('specialization-filter').addEventListener('change', filterEngineers);
+    document.getElementById('location-filter').addEventListener('input', filterEngineers);
+    document.getElementById('experience-filter').addEventListener('change', filterEngineers);
+
+    function filterEngineers() {
+        const specialization = document.getElementById('specialization-filter').value;
+        const location = document.getElementById('location-filter').value.toLowerCase();
+        const experience = document.getElementById('experience-filter').value;
+        
+        const cards = document.querySelectorAll('.engineer-card');
+        
+        cards.forEach(card => {
+            const cardSpecialization = card.dataset.specialization;
+            const cardLocation = card.dataset.location.toLowerCase();
+            const cardExperience = parseInt(card.dataset.experience);
+            
+            const specializationMatch = !specialization || cardSpecialization.includes(specialization);
+            const locationMatch = !location || cardLocation.includes(location);
+            const experienceMatch = !experience || cardExperience >= parseInt(experience);
+            
+            if (specializationMatch && locationMatch && experienceMatch) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    // Engineer modal
+    document.getElementById('btn-become-engineer').addEventListener('click', () => {
+        document.getElementById('become-engineer-modal').classList.remove('hidden');
+    });
+
+    document.getElementById('btn-cancel-engineer').addEventListener('click', () => {
+        document.getElementById('become-engineer-modal').classList.add('hidden');
+    });
+
+    // Contact engineer
+    document.querySelectorAll('.contact-engineer').forEach(button => {
+        button.addEventListener('click', function() {
+            const engineerName = this.dataset.engineer;
+            const engineerEmail = this.dataset.email;
+            alert(`Contact ${engineerName} at: ${engineerEmail}`);
+        });
+    });
+
+    // Engineer form submission
+    document.getElementById('engineer-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData);
+        
+        try {
+            const response = await fetch('/api/engineers', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                alert('Application submitted successfully!');
+                document.getElementById('become-engineer-modal').classList.add('hidden');
+                this.reset();
+                location.reload();
+            } else {
+                alert('Error: ' + result.error);
+            }
+        } catch (error) {
+            alert('Network error. Please try again.');
+        }
+    });
+</script>
+{% endblock %}

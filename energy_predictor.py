@@ -30,7 +30,7 @@ class EnergyPredictor:
         }
         self.geocoding_api = "https://geocoding-api.open-meteo.com/v1/search"
 
-    # ------------------ 🌍 GEOCODING ------------------
+    # ------------------  GEOCODING ------------------
     def get_coordinates_from_city(self, city_name: str) -> Tuple[float, float]:
         """Convert city name to coordinates using geocoding API."""
         try:
@@ -62,8 +62,8 @@ class EnergyPredictor:
             nasa_url = "https://power.larc.nasa.gov/api/temporal/daily/point"
             nasa_params = {
                 'parameters': 'ALLSKY_SFC_SW_DWN,T2M,RH2M,CLRSKY_DAYS',
-                'start': '20220101',
-                'end': '20221231',
+                'start': '20240101',
+                'end': '20241231',
                 'latitude': lat,
                 'longitude': lon,
                 'community': 'RE',
@@ -134,8 +134,8 @@ class EnergyPredictor:
         """Mock elevation function (replace with real API for accuracy)."""
         return 100 + np.sin(np.radians(lat)) * 500
 
-    # ------------------ 🧠 TRAINING ------------------
-    def train_energy_model(self, energy_type: str, num_samples: int = 100):  # Default changed to 100
+    # ------------------  TRAINING ------------------
+    def train_energy_model(self, energy_type: str, num_samples: int = 100):
         """Train model for specific energy type using simulated global samples."""
         logging.info(f"Training {energy_type.capitalize()} model on {num_samples} samples...")
 
@@ -176,7 +176,7 @@ class EnergyPredictor:
         scaler = StandardScaler()
         X_scaled = scaler.fit_transform(X)
 
-        model = RandomForestRegressor(n_estimators=50, max_depth=8, random_state=42)  # Reduced complexity
+        model = RandomForestRegressor(n_estimators=50, max_depth=8, random_state=42)
         model.fit(X_scaled, y)
 
         # Evaluation
@@ -188,7 +188,7 @@ class EnergyPredictor:
         self.scalers[energy_type] = scaler
         self.models[energy_type] = model
 
-    # ------------------ 📈 PREDICTION ------------------
+    # ------------------  PREDICTION ------------------
     def predict_energy(self, lat: float, lon: float, energy_type: str, area: float = 100) -> Dict[str, Any]:
         """Predict energy potential for a location and energy type."""
         if energy_type not in self.models:
@@ -223,7 +223,7 @@ class EnergyPredictor:
             'input_data': data
         }
 
-    # ------------------ 💾 SAVE / LOAD ------------------
+    # ------------------  SAVE / LOAD ------------------
     def save_models(self, base_path='energy_models'):
         os.makedirs(base_path, exist_ok=True)
         for etype in self.models:
@@ -251,43 +251,3 @@ class EnergyPredictor:
                 logging.error(f"Error loading {etype} model: {e}")
                 success = False
         return success
-
-# ------------------ 🚀 TEST ------------------
-if __name__ == "__main__":
-    predictor = EnergyPredictor()
-
-    # Try to load models, if not found then train new ones
-    if not predictor.load_models():
-        logging.info("No pre-trained models found. Training new models...")
-        for etype in ['solar', 'wind', 'hydro']:
-            predictor.train_energy_model(etype, num_samples=100)  # Reduced to 100 samples
-        predictor.save_models()
-        logging.info("Training completed and models saved!")
-    else:
-        logging.info("Successfully loaded pre-trained models")
-
-    # Test with coordinates
-    test_lat, test_lon = 37.7749, -122.4194
-    logging.info("\n=== Testing with coordinates ===")
-    for etype in ['solar', 'wind', 'hydro']:
-        try:
-            pred = predictor.predict_energy(test_lat, test_lon, etype, area=100)
-            logging.info(f"{etype.capitalize()} Prediction @({test_lat}, {test_lon}): "
-                         f"{pred['predicted_energy_kwh']:.0f} kWh, "
-                         f"Suitability: {pred['suitability_score']:.2f}")
-        except Exception as e:
-            logging.error(f"Prediction failed for {etype}: {e}")
-
-    # Test with city names
-    logging.info("\n=== Testing with city names ===")
-    test_cities = ["London", "Tokyo", "New York", "Sydney", "Dubai"]
-    
-    for city in test_cities:
-        try:
-            logging.info(f"\n--- {city} ---")
-            for etype in ['solar', 'wind', 'hydro']:
-                pred = predictor.predict_energy_city(city, etype, area=100)
-                logging.info(f"{etype.capitalize()}: {pred['predicted_energy_kwh']:.0f} kWh, "
-                           f"Suitability: {pred['suitability_score']:.2f}")
-        except Exception as e:
-            logging.error(f"Failed to analyze {city}: {e}")
